@@ -16,7 +16,7 @@ namespace Interview.FilteringWords.Domain
      * Things that I haven't considered are the use of Capital Letters on the strings, and if the resulting list could contain repeated elements.
      * 
      */
-    public class Filter
+    public class Filter : IFilter
     {
         private readonly int _stringLength;
 

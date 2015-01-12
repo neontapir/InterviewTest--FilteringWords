@@ -9,12 +9,12 @@ namespace Interview.FilteringWords.Tests
     [TestFixture]
     public class FilterTests
     {
-        private Filter _filter;
+        private IFilter _filter;
 
         [SetUp]
         public void SetUp()
         {
-            _filter = new Filter(6);
+            _filter = new MyFilter(6);
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace Interview.FilteringWords.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Constructor_LengthLowerZero(int stringLength)
         {
-            _filter = new Filter(stringLength);
+            _filter = new MyFilter(stringLength);
         }
 
         [Test]
@@ -78,6 +78,19 @@ namespace Interview.FilteringWords.Tests
             var result = _filter.Apply(listOfWords);
 
             const int expectedAmountOfWords = 2;
+            Assert.AreEqual(expectedAmountOfWords, result.Count());
+        }
+
+        [Test]
+        public void Apply_TwoFragmentsButIncompleteWord_NoStringsMatched()
+        {
+            string[] listOfWords =
+            {
+                "or", "ta", "tailor",
+            }; // Fragments == or, ta
+            var result = _filter.Apply(listOfWords);
+
+            const int expectedAmountOfWords = 0;
             Assert.AreEqual(expectedAmountOfWords, result.Count());
         }
 
